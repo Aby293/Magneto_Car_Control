@@ -6,7 +6,7 @@
 #define ECHO_PIN   15  // (GPIO 3)
 
 // Initialize the ultrasonic sensor
-void ultrasonic_init();
+void ultrasonic_init(void);
 
 // Get distance in centimeters
 float ultrasonic_get_distance_cm(void);
