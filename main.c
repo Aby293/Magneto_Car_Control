@@ -1,31 +1,38 @@
 #include "led.h"
+#include "pico/stdlib.h"
+#include "stdio.h"
+#include "buzzer.h"
+#include "ultrasonic.h"
+#include "led_control.h"
 
-int main() {
-    stdio_init_all();
-    
-    LED_Init();
-    VCC_On();
+int main() { 
+    stdio_init_all(); 
+    initBuzzer();
+    // initLEDs();
+    ultrasonic_init();
+    while (1) { 
+        printf("Hello, Pico!\n");
+        // buzzerOn();
+        // lightsFrontOn(); 
+        // sleep_ms(3000);  
+        // lightsFrontOff();
+        // sleep_ms(3000);  
+        // lightsBackOn();
+        // sleep_ms(3000);
+        // lightsBackOff();
+        // sleep_ms(3000);
+        // turnRightOn(); 
+        // sleep_ms(3000);
+        // turnRightOff();
+        // sleep_ms(3000);
+        // turnLeftOn();
+        // sleep_ms(3000);
+        // turnLeftOff();
+        float distance = ultrasonic_get_distance_cm();
+        printf("Distance: %.2f cm\n", distance);
+        sleep_ms(3000);
 
-    while (1) {
-        delay_ms(5000);
 
-        LED_On(0);
-        delay_ms(1000);
-        LED_Off(0);
-
-        LED_On(1);
-        delay_ms(1000);
-        LED_Off(1);
-
-        LED_On(2);
-        delay_ms(1000);
-        LED_Off(2);
-
-        LED_All_On();
-        delay_ms(2000);
-        LED_All_Off();
-
-    }
-
-    return 0;
+    } 
+    return 0; 
 }

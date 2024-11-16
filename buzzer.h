@@ -2,7 +2,7 @@
 #define BUZZER_H
 
 #include "pico/stdlib.h"
-#define BUZZER_PIN 13
+#define BUZZER_PIN 25
 
 // Function prototypes
 void initBuzzer(void);

@@ -1,4 +1,6 @@
 #include "ultrasonic.h"
+#include "pico/stdlib.h"
+#include "stdio.h"
 
 // Static variables to store pin numbers
 
@@ -15,6 +17,7 @@ void ultrasonic_init() {
 
 float ultrasonic_get_distance_cm(void) {
     // Trigger the ultrasonic sensor
+    printf("Triggering the ultrasonic sensor\n");
     gpio_put(TRIGGER_PIN, 1);
     sleep_us(10); // Send a 10 μs HIGH pulse
     gpio_put(TRIGGER_PIN, 0);
@@ -22,11 +25,13 @@ float ultrasonic_get_distance_cm(void) {
     // Measure the echo pulse duration
     absolute_time_t start_time = get_absolute_time();
     while (gpio_get(ECHO_PIN) == 0) {
+        printf("Waiting for echo pin to go HIGH\n");
         start_time = get_absolute_time(); // Wait for the echo pin to go HIGH
     }
 
     absolute_time_t end_time = get_absolute_time();
     while (gpio_get(ECHO_PIN) == 1) {
+        printf("Waiting for echo pin to go LOW\n");
         end_time = get_absolute_time(); // Wait for the echo pin to go LOW
     }
 
