@@ -2,8 +2,8 @@
 #define ULTRASONIC_H
 
 #include "pico/stdlib.h"
-#define TRIGGER_PIN     19 
-#define ECHO_PIN   20
+#define TRIGGER_PIN 19 
+#define ECHO_PIN 20
 
 // Initialize the ultrasonic sensor
 void ultrasonic_init(void);
