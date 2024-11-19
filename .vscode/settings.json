@@ -44,7 +44,8 @@
     "buzzer.h": "c",
     "imu.h": "c",
     "led_control.h": "c",
-    "mpu6050.h": "c"
+    "mpu6050.h": "c",
+    "car_control.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }

@@ -5,7 +5,6 @@
 #include "ultrasonic.h"
 #include "led_control.h"
 #include "mpu6050.h"
-#define LED_PIN 25
 
 int main()
 {
@@ -19,17 +18,14 @@ int main()
     // initBuzzer();
     // initLEDs();
     // ultrasonic_init();
-    // if (!initIMU()) {
-    //     printf("IMU initialization failed!\n");
-    //     while (1){
-    //         printf("IMU initialization failed!\n");
-    //     }
-    // }
-    // printf("IMU initialized successfully.\n");
+    
     while (1)
     {
         printf("Hello, Pico!\n");
         // buzzerOn();
+        // sleep_ms(3000);
+        // buzzerOff();
+        // sleep_ms(3000);
 
         // lightsFrontOn();
         // sleep_ms(3000);
@@ -46,17 +42,20 @@ int main()
         // turnLeftOn();
         // sleep_ms(3000);
         // turnLeftOff();
-
-        // float distance = ultrasonic_get_distance_cm();
-        // printf("Distance: %.2f cm\n", distance);
-
-        // float ax, ay, az, gx, gy, gz;
-        // readAcceleration(&ax, &ay, &az);
-        // readGyroscope(&gx, &gy, &gz);
-
-        // printf("Accel (g): X=%.2f, Y=%.2f, Z=%.2f\n", ax, ay, az);
-        // printf("Gyro (dps): X=%.2f, Y=%.2f, Z=%.2f\n", gx, gy, gz);
         // sleep_ms(3000);
+
+        // printf("starting loop\n");
+        // for(int i = 0; i < 20; i++) {
+        //     printf("reading distance\n");
+        //     printf("Right: %.2f cm\n", get_ultrasonic_distance_right());
+        //     printf("Left: %.2f cm\n", get_ultrasonic_distance_left());
+        //     printf("Front: %.2f cm\n", get_ultrasonic_distance_front());
+        //     printf("Back: %.2f cm\n", get_ultrasonic_distance_back());
+        //     sleep_ms(3000);
+        // }
+        // printf("ending loop\n");
+
+
         // Read raw data from MPU6050
         mpu6050_read_raw(raw_accel, raw_gyro, &raw_temp);
 
@@ -68,7 +67,7 @@ int main()
         printf("Gyro (°/s): X=%.2f, Y=%.2f, Z=%.2f\n", gyro[0], gyro[1], gyro[2]);
         printf("Temp (°C): %.2f\n", raw_temp / 340.0 + 36.53);
 
-        sleep_ms(500);
+        sleep_ms(3000);
     }
     return 0;
 }

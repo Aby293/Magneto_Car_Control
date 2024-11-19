@@ -7,8 +7,8 @@
 
 // I2C Configuration
 #define I2C_PORT i2c0
-#define SDA_PIN 12
-#define SCL_PIN 13
+#define SDA_PIN 4
+#define SCL_PIN 5
 
 // MPU6050 Registers
 #define MPU6050_ADDR 0x68
