@@ -43,7 +43,8 @@
     "stdlib.h": "c",
     "buzzer.h": "c",
     "imu.h": "c",
-    "led_control.h": "c"
+    "led_control.h": "c",
+    "mpu6050.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
