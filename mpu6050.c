@@ -29,23 +29,24 @@ void mpu6050_init()
 }
 
 // Read raw accelerometer, gyroscope, and temperature data from the MPU6050
-void mpu6050_read_raw(int16_t *accel, int16_t *gyro, int16_t *temp)
+void mpu6050_read_raw(int16_t *gyro, int16_t *accel, int16_t *temp)
 {
     uint8_t buffer[14];
     mpu6050_read_registers(MPU6050_REG_ACCEL_XOUT_H, buffer, 14);
 
+    // Gyroscope values
+    gyro[0] = (buffer[0] << 8) | buffer[1];   // X
+    gyro[1] = (buffer[2] << 8) | buffer[3]; // Y
+    gyro[2] = (buffer[4] << 8) | buffer[5]; // Z
+    printf("Hi: X=%.2f, Y=%.2f, Z=%.2f\n", gyro[0], gyro[1], gyro[2]);
+
     // Accelerometer values
-    accel[0] = (buffer[0] << 8) | buffer[1]; // X
-    accel[1] = (buffer[2] << 8) | buffer[3]; // Y
-    accel[2] = (buffer[4] << 8) | buffer[5]; // Z
+    accel[0] = (buffer[8] << 8) | buffer[9]; // X
+    accel[1] = (buffer[10] << 8) | buffer[11]; // Y
+    accel[2] = (buffer[12] << 8) | buffer[13]; // Z
 
     // Temperature value
     *temp = (buffer[6] << 8) | buffer[7];
-
-    // Gyroscope values
-    gyro[0] = (buffer[8] << 8) | buffer[9];   // X
-    gyro[1] = (buffer[10] << 8) | buffer[11]; // Y
-    gyro[2] = (buffer[12] << 8) | buffer[13]; // Z
 }
 
 // Convert raw data to meaningful accelerometer (g) and gyroscope (°/s) values

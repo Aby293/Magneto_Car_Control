@@ -45,7 +45,9 @@
     "imu.h": "c",
     "led_control.h": "c",
     "mpu6050.h": "c",
-    "car_control.h": "c"
+    "car_control.h": "c",
+    "i2c.h": "c",
+    "gpio.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }

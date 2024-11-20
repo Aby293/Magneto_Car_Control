@@ -4,6 +4,7 @@
 #include "dc_motor.h"
 
 // Function prototypes
+void initCar();
 void moveForward(int speed);    // Move the car forward at speed (0-255)
 void moveBackward(int speed);   // Move the car backward at speed (0-255)
 void turnRight(int speed);      // Turn the car right at speed (0-255)
