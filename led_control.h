@@ -20,5 +20,9 @@ void turnRightOn();
 void turnRightOff();
 void turnLeftOn();
 void turnLeftOff();  
+void leftLightsFlasherOn();
+void leftLightsFlasherOff();
+void rightLightsFlasherOn();
+void rightLightsFlasherOff();
 
 #endif 

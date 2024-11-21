@@ -1,9 +1,12 @@
 #include "led_control.h"
 #include "pico/stdlib.h"
+#include "hardware/timer.h"
 
 // Array to store LED pin numbers
 const int ledPins[] = {LED1_PIN, LED2_PIN, LED3_PIN, LED4_PIN};
-const int ledCount = sizeof(ledPins) / sizeof(ledPins[0]);
+const int ledCount = 4;
+repeating_timer_t left_timer;
+repeating_timer_t right_timer;
 
 // Initialize all LEDs
 void initLEDs() {
@@ -12,6 +15,19 @@ void initLEDs() {
         gpio_set_dir(ledPins[i], GPIO_OUT);
         gpio_put(ledPins[i], 0); // Ensure all LEDs start off
     }
+}
+
+bool left_light_flashing_callback(repeating_timer_t *rt) {
+    toggleLED(2);
+    toggleLED(4);
+    return true;
+}
+
+// Callback function to toggle the right light
+bool right_light_flashing_callback(repeating_timer_t *rt) {
+    toggleLED(1);
+    toggleLED(3);
+    return true;
 }
 
 // Turn on a specific LED
@@ -90,4 +106,29 @@ void turnRightOff() {
 void turnLeftOff() {
     turnOffLED(2);
     turnOffLED(4);
+}
+
+void leftLightsFlasherOn() {
+    turnOffAllLEDs();
+    add_repeating_timer_ms(500, left_light_flashing_callback, NULL, &left_timer); // Flash every 500ms
+}
+
+// Method to turn off the left light flasher
+void leftLightsFlasherOff() {
+    cancel_repeating_timer(&left_timer); // Cancel the timer
+    gpio_put(LED2_PIN, false);    // Turn off the left light
+    gpio_put(LED4_PIN, false);
+}
+
+// Method to turn on the right light flasher
+void rightLightsFlasherOn() {
+    turnOffAllLEDs();
+    add_repeating_timer_ms(500, right_light_flashing_callback, NULL, &right_timer); // Flash every 500ms
+}
+
+// Method to turn off the right light flasher
+void rightLightsFlasherOff() {
+    cancel_repeating_timer(&right_timer); // Cancel the timer
+    gpio_put(LED1_PIN, false);    // Turn off the right light
+    gpio_put(LED3_PIN, false);
 }

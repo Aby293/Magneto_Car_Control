@@ -1,4 +1,4 @@
-#include "led.h"
+// #include "led.h"
 #include "pico/stdlib.h"
 #include "stdio.h"
 #include "buzzer.h"
@@ -28,7 +28,7 @@ int main()
         printf("Hello, Pico!\n");
       
         buzzerOn();
-        sleep_ms(10000);
+        sleep_ms(5000);
         buzzerOff();
         // sleep_ms(3000);
 
@@ -99,7 +99,7 @@ int main()
         moveBackward(225);
         sleep_ms(5000);
         turnRight(225);
-        sleep_ms(3000);
+        sleep_ms(5000);
         turnLeft(225);
         sleep_ms(3000);
 

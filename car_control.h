@@ -2,6 +2,7 @@
 #define CAR_CONTROL_H
 
 #include "dc_motor.h"
+#include "led_control.h"
 
 // Function prototypes
 void initCar();
