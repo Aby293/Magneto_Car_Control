@@ -26,13 +26,14 @@ void ultrasonic_init() {
 
 float ultrasonic_get_distance_cm(int echo_pin) {
     // Trigger the ultrasonic sensor
-    printf("Triggering the ultrasonic sensor\n");
+    // printf("Triggering the ultrasonic sensor\n");
     gpio_put(TRIGGER_PIN, 1);
     sleep_us(10); // Send a 10 μs HIGH pulse
     gpio_put(TRIGGER_PIN, 0);
 
     // Measure the echo pulse duration
     absolute_time_t start_time = get_absolute_time();
+    absolute_time_t timeout_time = make_timeout_time_us(30000);
     while (gpio_get(echo_pin) == 0) {
         start_time = get_absolute_time(); // Wait for the echo pin to go HIGH
     }

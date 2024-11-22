@@ -1,12 +1,14 @@
 #include "car_control.h"
 #include "pico/stdlib.h"
+#include "stdio.h"
 #include <stdbool.h>
-
 
 void initCar(){
     initMotors();
     initLEDs();
 }
+
+
 // Move the car forward
 void moveForward(int speed) {
     leftLightsFlasherOff();

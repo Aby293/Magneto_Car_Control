@@ -38,7 +38,6 @@ void mpu6050_read_raw(int16_t *gyro, int16_t *accel, int16_t *temp)
     gyro[0] = (buffer[0] << 8) | buffer[1];   // X
     gyro[1] = (buffer[2] << 8) | buffer[3]; // Y
     gyro[2] = (buffer[4] << 8) | buffer[5]; // Z
-    printf("Hi: X=%.2f, Y=%.2f, Z=%.2f\n", gyro[0], gyro[1], gyro[2]);
 
     // Accelerometer values
     accel[0] = (buffer[8] << 8) | buffer[9]; // X
@@ -52,9 +51,9 @@ void mpu6050_read_raw(int16_t *gyro, int16_t *accel, int16_t *temp)
 // Convert raw data to meaningful accelerometer (g) and gyroscope (°/s) values
 void convert_raw_data(int16_t *raw_accel, int16_t *raw_gyro, float *accel, float *gyro)
 {
-    accel[0] = raw_accel[0] / 16384.0f;
-    accel[1] = raw_accel[1] / 16384.0f;
-    accel[2] = raw_accel[2] / 16384.0f;
+    accel[0] = raw_accel[0]*90 / 16384.0f;
+    accel[1] = raw_accel[1]*90 / 16384.0f;
+    accel[2] = raw_accel[2]*90 / 16384.0f;
 
     gyro[0] = raw_gyro[0] / 131.0f;
     gyro[1] = raw_gyro[1] / 131.0f;
