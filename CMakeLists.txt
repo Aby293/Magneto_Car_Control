@@ -35,7 +35,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(MS_01_Team_15_Code main.c led.c buzzer.c ultrasonic.c led_control.c mpu6050.c dc_motor.c car_control.c)
+add_executable(MS_01_Team_15_Code main.c led.c buzzer.c ultrasonic.c led_control.c mpu6050.c dc_motor.c car_control.c esp8266_server.c)
 
 pico_set_program_name(MS_01_Team_15_Code "MS_01_Team_15_Code")
 pico_set_program_version(MS_01_Team_15_Code "0.1")
@@ -48,7 +48,8 @@ pico_enable_stdio_usb(MS_01_Team_15_Code 1)
 target_link_libraries(MS_01_Team_15_Code
         pico_stdlib
         hardware_i2c
-        hardware_pwm)
+        hardware_pwm
+        hardware_uart)
 
 # Add the standard include files to the build
 target_include_directories(MS_01_Team_15_Code PRIVATE

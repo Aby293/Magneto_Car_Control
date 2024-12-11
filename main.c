@@ -1,83 +1,176 @@
-// #include "led.h"
-#include "pico/stdlib.h"
-#include "buzzer.h"
-#include "ultrasonic.h"
+// // #include "led.h"
+// #include "pico/stdlib.h"
+// #include "buzzer.h"
+// #include "ultrasonic.h"
 #include "led_control.h"
-#include "mpu6050.h"
-#include "car_control.h"
-#include "stdio.h"
+// #include "mpu6050.h"
+// #include "car_control.h"
+// #include "stdio.h"
 
 
-int main()
-{
-    stdio_init_all();
-    initBuzzer();
-    // Initialize MPU6050
-    // mpu6050_init();
+// int main()
+// {
+//     stdio_init_all();
+//     initBuzzer();
+//     // Initialize MPU6050
+//     // mpu6050_init();
 
-    // int16_t raw_accel[3], raw_gyro[3], raw_temp;
-    // float accel[3], gyro[3];
+//     // int16_t raw_accel[3], raw_gyro[3], raw_temp;
+//     // float accel[3], gyro[3];
     
-    initCar();
+//     initCar();
 
-    // initLEDs();
-    ultrasonic_init();
-        buzzerOn();
-        sleep_ms(5000);
-        buzzerOff();
-    while (1){
-        printf("Hello, Pico!\n");
+//     // initLEDs();
+//     ultrasonic_init();
+//         buzzerOn();
+//         sleep_ms(5000);
+//         buzzerOff();
+//     while (1){
+//         printf("Hello, Pico!\n");
       
-        // // sleep_ms(3000);
-            // printf("reading distance\n");
-            // printf("Right: %.2f cm\n", get_ultrasonic_distance_right());
-            // printf("Left: %.2f cm\n", get_ultrasonic_distance_left());
-            // printf("Front: %.2f cm\n", get_ultrasonic_distance_front());
-            // printf("Back: %.2f cm\n", get_ultrasonic_distance_back());
+//         // // sleep_ms(3000);
+//             // printf("reading distance\n");
+//             // printf("Right: %.2f cm\n", get_ultrasonic_distance_right());
+//             // printf("Left: %.2f cm\n", get_ultrasonic_distance_left());
+//             // printf("Front: %.2f cm\n", get_ultrasonic_distance_front());
+//             // printf("Back: %.2f cm\n", get_ultrasonic_distance_back());
 
 
-        // // Read raw data from MPU6050
-        // mpu6050_read_raw(raw_accel, raw_gyro, &raw_temp);
+//         // // Read raw data from MPU6050
+//         // mpu6050_read_raw(raw_accel, raw_gyro, &raw_temp);
 
-        // // Convert raw data to meaningful values
-        // convert_raw_data(raw_accel, raw_gyro, accel, gyro);
+//         // // Convert raw data to meaningful values
+//         // convert_raw_data(raw_accel, raw_gyro, accel, gyro);
 
-        // // Print data to console
-        // printf("Gyro (°/s): X=%.2f, Y=%.2f, Z=%.2f\n", accel[0], accel[1], accel[2]);
-        // // printf("Acc (g): X=%.2f, Y=%.2f, Z=%.2f\n", gyro[0], gyro[1], gyro[2]);
-        // // printf("Temp (°C): %.2f\n", raw_temp / 340.0 + 36.53);
+//         // // Print data to console
+//         // printf("Gyro (°/s): X=%.2f, Y=%.2f, Z=%.2f\n", accel[0], accel[1], accel[2]);
+//         // // printf("Acc (g): X=%.2f, Y=%.2f, Z=%.2f\n", gyro[0], gyro[1], gyro[2]);
+//         // // printf("Temp (°C): %.2f\n", raw_temp / 340.0 + 36.53);
 
-        // if(accel[0]>50){
-        //     printf("Car moves backward\n");
-        // }
+//         // if(accel[0]>50){
+//         //     printf("Car moves backward\n");
+//         // }
 
-        // if(accel[0]<-50){
-        //     printf("Car moves forward\n");
-        // }
+//         // if(accel[0]<-50){
+//         //     printf("Car moves forward\n");
+//         // }
 
-        // if(accel[1]>50){
-        //     printf("Car moves right\n");
-        // }
+//         // if(accel[1]>50){
+//         //     printf("Car moves right\n");
+//         // }
 
-        // if(accel[1]<-50){
-        //     printf("Car moves left\n");
-        // }
-        moveForward(125);
-        sleep_ms(5000);
-        stopCar();
-        sleep_ms(3000);
-        moveBackward(125);
-        sleep_ms(5000);
-        moveForward(225);
-        sleep_ms(5000);
-        moveBackward(225);
-        sleep_ms(5000);
-        turnRight(225);
-        sleep_ms(5000);
-        turnLeft(225);
-        sleep_ms(5000);
+//         // if(accel[1]<-50){
+//         //     printf("Car moves left\n");
+//         // }
+//         moveForward(125);
+//         sleep_ms(5000);
+//         stopCar();
+//         sleep_ms(3000);
+//         moveBackward(125);
+//         sleep_ms(5000);
+//         moveForward(225);
+//         sleep_ms(5000);
+//         moveBackward(225);
+//         sleep_ms(5000);
+//         turnRight(225);
+//         sleep_ms(5000);
+//         turnLeft(225);
+//         sleep_ms(5000);
 
-        sleep_ms(3000);
+//         sleep_ms(3000);
+//     }
+//     return 0;
+// }
+
+#include "pico/stdlib.h"
+#include "esp8266_server.h"
+
+// int main() {
+//     stdio_init_all();
+//     setup_esp8266_server();
+
+//     while (1) {
+//         read_server_response();
+//         sleep_ms(500);
+    
+//     }
+
+//     return 0;
+// }
+
+// #include "esp8266_client.h"
+
+// int main() {
+//     stdio_init_all();
+//     setup_esp8266_client();
+
+//     while (1) {
+//         printf("Sending message to server...\n");
+//         send_data("1");
+//         sleep_ms(3000);  // Wait 5 seconds before sending again
+//         send_data("0");
+//         sleep_ms(3000);
+//     }
+
+//     return 0;
+// }
+
+// int main() {
+//     stdio_init_all();
+//     setup_esp8266_client();
+    
+
+//     while (1) {
+//         printf("Sending message to server...\n");
+//         send_data("1");
+//         sleep_ms(3000);  // Wait 5 seconds before sending again
+//         send_data("0");
+//         sleep_ms(3000);
+//     }
+
+//     return 0;
+// }
+
+// #include <string.h>
+
+// int main() {
+//     stdio_init_all();
+//     setup_esp8266_server();
+//     initLEDs();
+
+//     while (1) {
+//         char response[516];
+//         read_server_response(response);
+//         sleep_ms(500);
+//         if (response != NULL) {
+//             if (strcmp(response, "1") == 0) {
+//                 turnOnAllLEDs();
+//             } else if (strcmp(response, "0") == 0) {
+//                 turnOffAllLEDs();
+//             }
+//         }
+        
+//     }
+
+//     return 0;
+// }
+
+
+// Main function
+int main() {
+    stdio_init_all(); // Initialize standard I/O for debugging
+
+    // Set up GPIO and ESP8266 server
+    initLEDs();
+    setup_esp8266_server();
+
+    printf("ESP8266 Wi-Fi Server is running...\n");
+
+    // Infinite loop to handle incoming client requests
+    while (true) {
+        read_server_response();
+        sleep_ms(100); // Short delay to prevent overloading the CPU
     }
+
     return 0;
 }
