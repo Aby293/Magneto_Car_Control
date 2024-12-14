@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>ESP8266 Bulb Control</title>
-  </head>
-  <body>
-    <h1>Control the Bulb</h1>
-    <button onclick="sendCommand('ON')">Turn ON</button>
-    <button onclick="sendCommand('OFF')">Turn OFF</button>
-
+<head>
+    <title>ESP8266 Server</title>
+</head>
+<body>
+    <h1>ESP8266 Server</h1>
+    <button onclick="toggleLED()">Toggle LED</button>
     <script>
-      function sendCommand(command) {
-        fetch(`http://192.168.4.1/${command}`)
-          .then((response) => response.text())
-          .then((data) => console.log("Response:", data))
-          .catch((error) => console.error("Error:", error));
-      }
+        function toggleLED() {
+            fetch('/toggleLED')
+                .then(response => response.text())
+                .then(data => console.log(data));
+        }
     </script>
-  </body>
+</body>
 </html>

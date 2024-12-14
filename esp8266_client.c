@@ -1,68 +1,56 @@
-#include "esp8266_client.h"
-#include "hardware/uart.h"
+#include <stdio.h>
 #include "pico/stdlib.h"
-#include <string.h>
+#include "hardware/uart.h"
+#include "pico/cyw43_arch.h"
 
-void send_command(const char *cmd) {
-    uart_puts(uart0, cmd);
-    uart_puts(uart0, "\r\n");
+// Replace with your server IP address and port
+#define SERVER_IP "192.168.4.1"
+#define SERVER_PORT 80
+
+void connect_to_server() {
+    struct sockaddr_in server_addr;
+    int sockfd;
+
+    // Create socket
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        printf("Socket creation error\n");
+        return;
+    }
+
+    // Set server address
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(SERVER_PORT);
+
+    // Convert IPv4 and IPv6 addresses from text to binary form
+    if (inet_pton(AF_INET, SERVER_IP, &server_addr.sin_addr) <= 0) {
+        printf("Invalid address/ Address not supported\n");
+        return;
+    }
+
+    // Connect to server
+    if (connect(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        printf("Connection Failed\n");
+        return;
+    }
+
+    printf("Connected to server\n");
+
+    // Send data
+    char *message = "GET /toggleLED HTTP/1.1\r\n\r\n";
+    send(sockfd, message, strlen(message), 0);
+
+    // Close socket
+    close(sockfd);
 }
 
-void setup_esp8266_client() {
-    // Set up UART
-    uart_init(uart0, 9600);
-    gpio_set_function(0, GPIO_FUNC_UART); // TX
-    gpio_set_function(1, GPIO_FUNC_UART); // RX
+int main() {
+    stdio_init_all();
 
-    // Reset the ESP8266
-    send_command("AT+RST");
-    sleep_ms(2000);
+    if (cyw43_arch_init()) {
+        printf("WiFi init failed");
+        return -1;
+    }
 
-    // Set ESP8266 to Wi-Fi Station Mode
-    send_command("AT+CWMODE=1");
-    sleep_ms(1000);
-
-    // Connect to Wi-Fi
-    char cmd[128];
-    snprintf(cmd, sizeof(cmd), "AT+CWJAP=\"%s\",\"%s\"", WIFI_SSID, WIFI_PASS);
-    send_command(cmd);
-    sleep_ms(5000);
-
-    // Connect to Server
-    snprintf(cmd, sizeof(cmd), "AT+CIPSTART=\"TCP\",\"%s\",%d", SERVER_IP, SERVER_PORT);
-    send_command(cmd);
-    sleep_ms(2000);
-
-    printf("Connected to server %s:%d\n", SERVER_IP, SERVER_PORT);
-}
-
-void send_data(const char *data) {
-    char cmd[128];
-
-    // Debug: Log the data to be sent
-    printf("Debug: Data to send: %s\n", data);
-
-    // Format the AT+CIPSEND command
-    snprintf(cmd, sizeof(cmd), "AT+CIPSEND=%d", (int)strlen(data));
-    
-    // Debug: Log the constructed command
-    printf("Debug: Command constructed: %s\n", cmd);
-
-    // Send the AT command
-    send_command(cmd);
-
-    // Debug: Log after sending the command
-    printf("Debug: Command sent: %s\n", cmd);
-    
-    // Sleep to allow the ESP8266 to process the command
-    sleep_ms(500);
-    
-    // Send the actual data
-    uart_puts(uart0, data);
-
-    // Debug: Log the data sent via UART
-    printf("Debug: Data sent via UART: %s\n", data);
-
-    // Sleep again to ensure the ESP8266 processes the data
-    sleep_ms(500);
+    connect_to_server();
+    return 0;
 }
