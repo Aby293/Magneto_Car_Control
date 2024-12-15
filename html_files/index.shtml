@@ -25,6 +25,19 @@
     <a href="/led.cgi?led=1"><button>LED ON</button></a>
     <a href="/led.cgi?led=0"><button>LED OFF</button></a>
     <br />
+    <h2>Movement Controls:</h2>
+    <a href="/move.cgi?direction=forward"><button>Forward</button></a>
+    <a href="/move.cgi?direction=backward"><button>Backward</button></a>
+    <a href="/move.cgi?direction=left"><button>Left</button></a>
+    <a href="/move.cgi?direction=right"><button>Right</button></a>
+    <a href="/move.cgi?direction=stop"><button>Stop</button></a>
+    <br />
+    <h2>Buzzer Control:</h2>
+    <a href="/buzzer.cgi?action=activate"><button>Activate Buzzer</button></a>
+    <a href="/buzzer.cgi?action=deactivate"><button>Deactivate Buzzer</button></a>
+    <br />
+    
+    <br />
     <br />
     <a href="/index.shtml">Refresh</a>
   </body>

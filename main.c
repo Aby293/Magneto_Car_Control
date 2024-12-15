@@ -171,6 +171,9 @@ int main() {
 
     cyw43_arch_init();
 
+    initCar(); 
+    initBuzzer();
+
     cyw43_arch_enable_sta_mode();
 
     // Connect to the WiFI network - loop until connected
