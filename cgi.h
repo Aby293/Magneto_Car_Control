@@ -25,13 +25,13 @@ const char *cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char *
     // Move our car based on the parameters
     if (strcmp(pcParam[0], "direction") == 0) {
         if (strcmp(pcValue[0], "forward") == 0) {
-            moveForward(128); // Move the car forward at half speed
+            moveForward(255); // Move the car forward at half speed
         } else if (strcmp(pcValue[0], "backward") == 0) {
-            moveBackward(128); // Move the car backward at half speed
+            moveBackward(255); // Move the car backward at half speed
         } else if (strcmp(pcValue[0], "left") == 0) {
-            turnLeft(128); // Turn the car left at half speed
+            turnLeft(255); // Turn the car left at half speed
         } else if (strcmp(pcValue[0], "right") == 0) {
-            turnRight(128); // Turn the car right at half speed
+            turnRight(255); // Turn the car right at half speed
         } else if (strcmp(pcValue[0], "stop") == 0) {
             stopCar(); // Stop the car
         }

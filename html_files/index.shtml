@@ -2,6 +2,33 @@
 <html>
   <head>
     <title>PicoW Webserver</title>
+    <script>
+      function sendRequest(url) {
+        fetch(url).catch(error => console.error('Error:', error));
+      }
+
+      function handleKeyDown(event) {
+        switch (event.key) {
+          case 'ArrowUp':
+            sendRequest('/move.cgi?direction=forward');
+            break;
+          case 'ArrowDown':
+            sendRequest('/move.cgi?direction=backward');
+            break;
+          case 'ArrowLeft':
+            sendRequest('/move.cgi?direction=left');
+            break;
+          case 'ArrowRight':
+            sendRequest('/move.cgi?direction=right');
+            break;
+          case ' ':
+            sendRequest('/move.cgi?direction=stop');
+            break;
+        }
+      }
+
+      document.addEventListener('keydown', handleKeyDown);
+    </script>
   </head>
   <body>
     <h1>PicoW Webserver Tutorial</h1>
@@ -26,18 +53,15 @@
     <a href="/led.cgi?led=0"><button>LED OFF</button></a>
     <br />
     <h2>Movement Controls:</h2>
-    <a href="/move.cgi?direction=forward"><button>Forward</button></a>
-    <a href="/move.cgi?direction=backward"><button>Backward</button></a>
-    <a href="/move.cgi?direction=left"><button>Left</button></a>
-    <a href="/move.cgi?direction=right"><button>Right</button></a>
-    <a href="/move.cgi?direction=stop"><button>Stop</button></a>
+    <button onclick="sendRequest('/move.cgi?direction=forward')">Forward</button>
+    <button onclick="sendRequest('/move.cgi?direction=backward')">Backward</button>
+    <button onclick="sendRequest('/move.cgi?direction=left')">Left</button>
+    <button onclick="sendRequest('/move.cgi?direction=right')">Right</button>
+    <button onclick="sendRequest('/move.cgi?direction=stop')">Stop</button>
     <br />
     <h2>Buzzer Control:</h2>
     <a href="/buzzer.cgi?action=activate"><button>Activate Buzzer</button></a>
     <a href="/buzzer.cgi?action=deactivate"><button>Deactivate Buzzer</button></a>
-    <br />
-    
-    <br />
     <br />
     <a href="/index.shtml">Refresh</a>
   </body>
