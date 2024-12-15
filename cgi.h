@@ -4,22 +4,23 @@
 #include "buzzer.h"
 
 // CGI handler which is run when a request for /led.cgi is detected
-const char * cgi_led_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
+const char *cgi_led_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
     // Check if an request for LED has been made (/led.cgi?led=x)
-    if (strcmp(pcParam[0] , "led") == 0){
+    if (strcmp(pcParam[0], "led") == 0)
+    {
         // Look at the argument to check if LED is to be turned on (x=1) or off (x=0)
-        if(strcmp(pcValue[0], "0") == 0)
+        if (strcmp(pcValue[0], "0") == 0)
             cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-        else if(strcmp(pcValue[0], "1") == 0)
+        else if (strcmp(pcValue[0], "1") == 0)
             cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
     }
-    
+
     // Send the index page back to the user
     return "/index.shtml";
 }
 
-const char * cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
+const char *cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
     // Move our car based on the parameters
     if (strcmp(pcParam[0], "direction") == 0) {
@@ -38,34 +39,42 @@ const char * cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char 
     return "/index.shtml";
 }
 
-const char * cgi_buzzer_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
+const char *cgi_buzzer_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
     // Check if a request for Buzzer has been made (/buzzer.cgi?action=x)
-    if (strcmp(pcParam[0], "action") == 0) {
+    if (strcmp(pcParam[0], "action") == 0)
+    {
         // Look at the argument to check if Buzzer is to be activated or deactivated
         if (strcmp(pcValue[0], "deactivate") == 0)
             buzzerOff();
         else if (strcmp(pcValue[0], "activate") == 0)
             buzzerOn();
     }
-    
+
     // Send the index page back to the user
     return "/index.shtml";
 }
-
 
 // tCGI Struct
 // Fill this with all of the CGI requests and their respective handlers
 static const tCGI cgi_handlers[] = {
     {
         // Html request for "/led.cgi" triggers cgi_handler
-        "/led.cgi", cgi_led_handler,
-        "/move.cgi", cgi_move_handler, 
-        "/buzzer.cgi", cgi_buzzer_handler,
+        "/led.cgi",
+        cgi_led_handler,
     },
-};
+    {
+        // Html request for "/move.cgi" triggers cgi_move_handler
+        "/move.cgi",
+        cgi_move_handler,
+    },
+    {
+        // Html request for "/buzzer.cgi" triggers cgi_buzzer_handler
+        "/buzzer.cgi",
+        cgi_buzzer_handler,
+    }};
 
 void cgi_init(void)
 {
-    http_set_cgi_handlers(cgi_handlers, 1);
+    http_set_cgi_handlers(cgi_handlers, 3);
 }
