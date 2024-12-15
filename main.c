@@ -2,7 +2,7 @@
 // #include "pico/stdlib.h"
 // #include "buzzer.h"
 // #include "ultrasonic.h"
-#include "led_control.h"
+// #include "led_control.h"
 // #include "mpu6050.h"
 // #include "car_control.h"
 // #include "stdio.h"
@@ -82,8 +82,8 @@
 //     return 0;
 // }
 
-#include "pico/stdlib.h"
-#include "esp8266_server.h"
+// #include "pico/stdlib.h"
+// #include "esp8266_server.h"
 
 // int main() {
 //     stdio_init_all();
@@ -155,22 +155,41 @@
 //     return 0;
 // }
 
+#include "lwip/apps/httpd.h"
+#include "pico/stdlib.h"
+#include "pico/cyw43_arch.h"
+#include "lwipopts.h"
+#include "ssi.h"
+#include "cgi.h"
 
-// Main function
+// WIFI Credentials - take care if pushing to github!
+const char WIFI_SSID[] = "XXX";
+const char WIFI_PASSWORD[] = "XXX";
+
 int main() {
-    stdio_init_all(); // Initialize standard I/O for debugging
+    stdio_init_all();
 
-    // Set up GPIO and ESP8266 server
-    initLEDs();
-    setup_esp8266_server();
+    cyw43_arch_init();
 
-    printf("ESP8266 Wi-Fi Server is running...\n");
+    cyw43_arch_enable_sta_mode();
 
-    // Infinite loop to handle incoming client requests
-    while (true) {
-        read_server_response();
-        sleep_ms(100); // Short delay to prevent overloading the CPU
+    // Connect to the WiFI network - loop until connected
+    while(cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 30000) != 0){
+        printf("Attempting to connect...\n");
     }
+    // Print a success message once connected
+    printf("Connected! \n");
+    
+    // Initialise web server
+    httpd_init();
+    printf("Http server initialised\n");
 
-    return 0;
+    // Configure SSI and CGI handler
+    ssi_init(); 
+    printf("SSI Handler initialised\n");
+    cgi_init();
+    printf("CGI Handler initialised\n");
+    
+    // Infinite loop
+    while(1);
 }

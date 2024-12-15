@@ -30,8 +30,13 @@ project(MS_01_Team_15_Code C CXX ASM)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
+execute_process(
+    COMMAND py makefsdata.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+)
+
 # Add executable. Default name is the project name, version 0.1
-add_executable(MS_01_Team_15_Code main.c led.c buzzer.c ultrasonic.c led_control.c mpu6050.c dc_motor.c car_control.c esp8266_server.c esp8266_client.c)
+add_executable(MS_01_Team_15_Code main.c led.c buzzer.c ultrasonic.c led_control.c mpu6050.c dc_motor.c car_control.c)
 
 pico_set_program_name(MS_01_Team_15_Code "MS_01_Team_15_Code")
 pico_set_program_version(MS_01_Team_15_Code "0.1")
@@ -45,7 +50,10 @@ target_link_libraries(MS_01_Team_15_Code
         pico_stdlib
         hardware_i2c
         hardware_pwm
-        hardware_uart)
+        hardware_adc
+        hardware_uart
+        pico_cyw43_arch_lwip_threadsafe_background
+        pico_lwip_http)
 
 # Add the standard include files to the build
 target_include_directories(MS_01_Team_15_Code PRIVATE
