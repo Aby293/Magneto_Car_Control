@@ -34,6 +34,7 @@ void turnRight(int speed) {
     moveMotor(1, 1, 0.5*speed);  // left motors
     moveMotor(2, 1, speed); // right motors
     leftLightsFlasherOff();
+    rightLightsFlasherOff();
     rightLightsFlasherOn();
 }
 
@@ -42,6 +43,7 @@ void turnLeft(int speed) {
     moveMotor(1, 1, speed); // left motors
     moveMotor(2, 1, 0.5*speed);  // right motors
     rightLightsFlasherOff();
+    leftLightsFlasherOff();
     leftLightsFlasherOn();
 }
 

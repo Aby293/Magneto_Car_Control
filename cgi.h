@@ -17,26 +17,30 @@ const char *cgi_led_handler(int iIndex, int iNumParams, char *pcParam[], char *p
     }
 
     // Send the index page back to the user
-    return "/index.shtml";
+    // return "/index.shtml";
 }
 
 const char *cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
     // Move our car based on the parameters
     if (strcmp(pcParam[0], "direction") == 0) {
+        int speed = 255;
+        if (strcmp(pcParam[1], "speed") == 0) {
+            speed = atoi(pcValue[1]);
+        }
         if (strcmp(pcValue[0], "forward") == 0) {
-            moveForward(255); // Move the car forward at half speed
+            moveForward(speed); // Move the car forward at half speed
         } else if (strcmp(pcValue[0], "backward") == 0) {
-            moveBackward(255); // Move the car backward at half speed
+            moveBackward(speed); // Move the car backward at half speed
         } else if (strcmp(pcValue[0], "left") == 0) {
-            turnLeft(255); // Turn the car left at half speed
+            turnLeft(speed); // Turn the car left at half speed
         } else if (strcmp(pcValue[0], "right") == 0) {
-            turnRight(255); // Turn the car right at half speed
+            turnRight(speed); // Turn the car right at half speed
         } else if (strcmp(pcValue[0], "stop") == 0) {
             stopCar(); // Stop the car
         }
     }
-    return "/index.shtml";
+    // return "/index.shtml";
 }
 
 const char *cgi_buzzer_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
@@ -52,7 +56,7 @@ const char *cgi_buzzer_handler(int iIndex, int iNumParams, char *pcParam[], char
     }
 
     // Send the index page back to the user
-    return "/index.shtml";
+    // return "/index.shtml";
 }
 
 // tCGI Struct
