@@ -2,6 +2,7 @@
 #include "pico/cyw43_arch.h"
 #include "car_control.h"
 #include "buzzer.h"
+#include "ultrasonic.h"
 
 // CGI handler which is run when a request for /led.cgi is detected
 const char *cgi_led_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
@@ -28,16 +29,46 @@ const char *cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char *
         if (strcmp(pcParam[1], "speed") == 0) {
             speed = atoi(pcValue[1]);
         }
-        if (strcmp(pcValue[0], "forward") == 0) {
-            moveForward(speed); // Move the car forward at half speed
+        if (strcmp(pcValue[0], "forward") == 0 ) {
+            if(get_ultrasonic_distance_front() < 20){
+                stopCar();
+                buzzerOn();
+            }
+            else{
+                buzzerOff();
+                moveForward(speed); // Move the car forward at half speed
+            }
         } else if (strcmp(pcValue[0], "backward") == 0) {
-            moveBackward(speed); // Move the car backward at half speed
+              if(get_ultrasonic_distance_back() < 20){
+                stopCar();
+                buzzerOn();
+            }
+            else{
+            buzzerOff();
+            moveBackward(speed);
+            } // Move the car backward at half speed
         } else if (strcmp(pcValue[0], "left") == 0) {
+            if(get_ultrasonic_distance_left() < 20){
+                stopCar();
+                buzzerOn();
+            }
+            else{
+            buzzerOff();
             turnLeft(speed); // Turn the car left at half speed
+            }
         } else if (strcmp(pcValue[0], "right") == 0) {
+            if(get_ultrasonic_distance_right() < 20){
+                stopCar();
+                buzzerOn();
+            }
+            else{
+             buzzerOff();
+
             turnRight(speed); // Turn the car right at half speed
+            }
         } else if (strcmp(pcValue[0], "stop") == 0) {
             stopCar(); // Stop the car
+            buzzerOff();
         }
     }
     // return "/index.shtml";
@@ -80,5 +111,6 @@ static const tCGI cgi_handlers[] = {
 
 void cgi_init(void)
 {
+    initBuzzer();
     http_set_cgi_handlers(cgi_handlers, 3);
 }

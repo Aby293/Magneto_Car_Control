@@ -82,79 +82,6 @@
 //     return 0;
 // }
 
-// #include "pico/stdlib.h"
-// #include "esp8266_server.h"
-
-// int main() {
-//     stdio_init_all();
-//     setup_esp8266_server();
-
-//     while (1) {
-//         read_server_response();
-//         sleep_ms(500);
-    
-//     }
-
-//     return 0;
-// }
-
-// #include "esp8266_client.h"
-
-// int main() {
-//     stdio_init_all();
-//     setup_esp8266_client();
-
-//     while (1) {
-//         printf("Sending message to server...\n");
-//         send_data("1");
-//         sleep_ms(3000);  // Wait 5 seconds before sending again
-//         send_data("0");
-//         sleep_ms(3000);
-//     }
-
-//     return 0;
-// }
-
-// int main() {
-//     stdio_init_all();
-//     setup_esp8266_client();
-    
-
-//     while (1) {
-//         printf("Sending message to server...\n");
-//         send_data("1");
-//         sleep_ms(3000);  // Wait 5 seconds before sending again
-//         send_data("0");
-//         sleep_ms(3000);
-//     }
-
-//     return 0;
-// }
-
-// #include <string.h>
-
-// int main() {
-//     stdio_init_all();
-//     setup_esp8266_server();
-//     initLEDs();
-
-//     while (1) {
-//         char response[516];
-//         read_server_response(response);
-//         sleep_ms(500);
-//         if (response != NULL) {
-//             if (strcmp(response, "1") == 0) {
-//                 turnOnAllLEDs();
-//             } else if (strcmp(response, "0") == 0) {
-//                 turnOffAllLEDs();
-//             }
-//         }
-        
-//     }
-
-//     return 0;
-// }
-
 //WORKING WIFI CODE
 
 #include "lwip/apps/httpd.h"
@@ -163,6 +90,7 @@
 #include "lwipopts.h"
 #include "ssi.h"
 #include "cgi.h"
+#include "car_control.h"
 
 // WIFI Credentials - take care if pushing to github!
 const char WIFI_SSID[] = "Abdelrahman's Galaxy A72";
@@ -174,7 +102,6 @@ int main() {
     cyw43_arch_init();
 
     initCar(); 
-    initBuzzer();
 
     cyw43_arch_enable_sta_mode();
 
