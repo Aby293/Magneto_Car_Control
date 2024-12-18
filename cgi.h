@@ -16,8 +16,8 @@ const char *cgi_led_handler(int iIndex, int iNumParams, char *pcParam[], char *p
             cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
     }
 
-    // Send the index page back to the user
-    // return "/index.shtml";
+    // // Send the index page back to the user
+    //  return "/index.shtml";
 }
 
 const char *cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
@@ -40,7 +40,7 @@ const char *cgi_move_handler(int iIndex, int iNumParams, char *pcParam[], char *
             stopCar(); // Stop the car
         }
     }
-    // return "/index.shtml";
+    //  return "/index.shtml";
 }
 
 const char *cgi_buzzer_handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
@@ -56,7 +56,7 @@ const char *cgi_buzzer_handler(int iIndex, int iNumParams, char *pcParam[], char
     }
 
     // Send the index page back to the user
-    // return "/index.shtml";
+    //  return "/index.shtml";
 }
 
 // tCGI Struct

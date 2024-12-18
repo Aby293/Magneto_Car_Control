@@ -31,7 +31,7 @@ void moveBackward(int speed) {
 
 // Turn the car right
 void turnRight(int speed) {
-    moveMotor(1, 1, 0.5*speed);  // left motors
+    moveMotor(1, 0, speed);  // left motors
     moveMotor(2, 1, speed); // right motors
     leftLightsFlasherOff();
     rightLightsFlasherOff();
@@ -41,7 +41,7 @@ void turnRight(int speed) {
 // Turn the car left
 void turnLeft(int speed) {
     moveMotor(1, 1, speed); // left motors
-    moveMotor(2, 1, 0.5*speed);  // right motors
+    moveMotor(2, 0, speed);  // right motors
     rightLightsFlasherOff();
     leftLightsFlasherOff();
     leftLightsFlasherOn();

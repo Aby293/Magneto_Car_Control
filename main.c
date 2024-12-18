@@ -168,7 +168,9 @@
 const char WIFI_SSID[] = "Abdelrahman's Galaxy A72";
 const char WIFI_PASSWORD[] = "bdnh2203";
 
-int main() {
+void print_ip_address() { const ip4_addr_t *ip = &cyw43_state.netif[CYW43_ITF_STA].ip_addr; printf("IP Address: %s\n", ip4addr_ntoa(ip));}
+
+int main() { 
     stdio_init_all();
 
     cyw43_arch_init();
@@ -188,6 +190,9 @@ int main() {
     // Initialise web server
     httpd_init();
     printf("Http server initialised\n");
+
+    print_ip_address();
+    
 
     // Configure SSI and CGI handler
     ssi_init(); 
